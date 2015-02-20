@@ -2,21 +2,34 @@ get '/' do
   erb :index
 end
 
-get "/playlist" do
-  erb :playlist
+get "/search" do
+  @videos = Playlist.find(1).videos
+  erb :search
 end
 
-post '/playlist' do
+post '/search' do
   @results = Playlist.search_for_video(params[:query])
-  erb :_results
+
+  if request.xhr?
+    erb :_results, layout: false
+  else
+    "You dun goofed"
+  end
 end
+
+
 
 post '/videos' do
   p params
-  video = Video.new(params[:video])
+  @video = Video.new(params[:video])
 
-  if video.save
-    "Turnt"
+  if @video.save
+    if request.xhr?
+      @videos = Playlist.find(1).videos << @video
+      erb :_playlist, layout: false
+    else
+      redirect '/search'
+    end
   end
 end
 
