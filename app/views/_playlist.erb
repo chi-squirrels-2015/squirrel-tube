@@ -1,0 +1,7 @@
+<%@videos.each_with_index do |video, index|%>
+  <tr>
+    <td><%=index+1%></td>
+    <td><%=video.title%></td>
+    <td><%=video.votes.count%></td>
+  </tr>
+<%end%>
