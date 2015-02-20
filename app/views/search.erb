@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="col-md-6" id="search-results"></div>
+  <div class="col-md-6">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Song Title</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+      <tbody id="playlist-table">
+        <%@videos.each_with_index do |video, index|%>
+          <tr>
+            <td><%=index+1%></td>
+            <td><%=video.title%></td>
+            <td><%=video.votes.count%></td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>

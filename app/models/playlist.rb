@@ -14,7 +14,9 @@ class Playlist < ActiveRecord::Base
 
     titles.each do |title|
       link = title.at_css("a")['href'].match(/v=([^&]+)/)
-      @results << {title: title.inner_text, link:link[1]}
+      if link
+        @results << {title: title.inner_text, link: link[1]}
+      end
     end
 
     @results
