@@ -5,6 +5,7 @@
       <form action="/videos" method="post">
         <input type="hidden" name="video[link]" value="<%=result[:link]%>">
         <input type="hidden" name="video[title]" value="<%=result[:title]%>">
+        <input type="hidden" name="video[duration]" value="<%=result[:duration]%>">
         <button class="btn btn-default add-link">Add Link to Playlist</button>
       </form>
     </div>

@@ -1,5 +1,5 @@
 <%@videos.each_with_index do |video, index|%>
-  <tr>
+  <tr class="videos" data-vid-id=<%=video.id%>>
     <td><%=index+1%></td>
     <td><%=video.title%></td>
     <td><%=video.votes.count%></td>

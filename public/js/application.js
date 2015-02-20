@@ -29,8 +29,8 @@ $(document).ready(function() {
     event.preventDefault();
 
     var url = $(this).attr('href');
-    $("a.active").siblings("iframe").remove()
-    $(".active").removeClass("active");
+    $(this).siblings("iframe").remove();
+    $(this).removeClass("active");
   });
 
   $("#search-results").on("click", ".add-link", function(event) {
@@ -48,5 +48,26 @@ $(document).ready(function() {
 
   })
 
+  $("#playlist-table").on("click", ".videos", function(event){
+    event.preventDefault();
+
+    $(this).attr("class", "success");
+
+    var request = $.ajax({
+      url:"/votes",
+      type:"post",
+      data: {vidId: $(this).data("vid-id")}
+    });
+
+    request.done(function(response){
+      $("#playlist-table").html(response);
+    });
+
+  });
+
+  var duration = 1;
+  setInterval(function(){
+
+  }, duration)
 
 });

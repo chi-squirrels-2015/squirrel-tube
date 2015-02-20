@@ -3,8 +3,14 @@ get '/' do
 end
 
 get "/search" do
-  @videos = Playlist.find(1).videos
+  @videos = Playlist.find(1).sorted_videos
   erb :search
+end
+
+get '/player' do
+  @videos = Playlist.find(1).sorted_videos
+
+  erb :player, layout: false
 end
 
 post '/search' do
@@ -22,15 +28,18 @@ end
 post '/videos' do
   p params
   @video = Video.new(params[:video])
+  @video.playlist_id = 1
+  @video.save
 
-  if @video.save
-    if request.xhr?
-      @videos = Playlist.find(1).videos << @video
-      erb :_playlist, layout: false
-    else
-      redirect '/search'
-    end
+  if request.xhr?
+    puts "I'm in here!"
+    puts
+    @videos = Playlist.find(1).sorted_videos
+    erb :_playlist, layout: false
+  else
+    redirect '/search'
   end
+
 end
 
 post '/login' do
@@ -43,5 +52,12 @@ post '/login' do
 end
 
 get '/logout' do
+  session.delete(:user_id)
+end
 
+post '/votes' do
+  @video = Video.find(params[:vidId])
+  Vote.create(video: @video, user: current_user)
+  @videos = Playlist.find(1).sorted_videos
+  erb :_playlist, layout: false
 end
